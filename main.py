@@ -1,13 +1,63 @@
 import streamlit as st
+import random
 
 st.title("Hangman")
 
+
+rletters = []
+word = "Rick roll"
+UC_word = word.upper()
+l_word = list(UC_word)
+chosen = '_'
+
 if "count" not in st.session_state:
     st.session_state.count = 0
+if "cletters" not in st.session_state:
+    st.session_state.cletters = []
 
 with st.container():
+    if st.session_state.count == 0:
+        st.code('''
+Awaiting for letter input...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+What are you waiting for?
+    ''')
     if st.session_state.count == 1:
         st.code('''
+Wow you arent so good at this huh?!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 _________________
 |________________|
 ''')
@@ -227,63 +277,128 @@ _______|_|_______
 |________________|
 ''')
 
-word = "Deez nuts"
-UC_word = word.upper()
-listed_word = list(UC_word)
-
-# len_word = len(word)
-# for i in range(len_word):
-#     st.markdown("_")
-
-def correct_or_not(letter):
-    b_status = st.button(str(letter))
-    if b_status == True:
-        if letter not in listed_word:
-            st.session_state.count+=1
-        elif letter in listed_word:
-            correct_letters = letter
-            listed_word.remove(letter)
-            if listed_word == None:
-                st.success(':white_check_mark: You have saved the man')
-
 kpi1, kpi2, kpi3, kpi4, kpi5, kpi6, kpi7, kpi8, kpi9 = st.columns(9)
 with kpi1:
-    correct_or_not("A")
-    correct_or_not("J")
-    correct_or_not("S")
-with kpi2:
-    correct_or_not("B")
-    correct_or_not("K")
-    correct_or_not("T")
-with kpi3:
-    correct_or_not("C")
-    correct_or_not("L")
-    correct_or_not("U")
-with kpi4:
-    correct_or_not("D")
-    correct_or_not("M")
-    correct_or_not("V")
-with kpi5:
-    correct_or_not("E")
-    correct_or_not("N")
-    correct_or_not("W")
-with kpi6:
-    correct_or_not("F")
-    correct_or_not("O")
-    correct_or_not("X")
-with kpi7:
-    correct_or_not("G")
-    correct_or_not("P")
-    correct_or_not("Y")
-with kpi8:
-    correct_or_not("H")
-    correct_or_not("Q")
-    correct_or_not("Z")
-with kpi9:
-    correct_or_not("I")
-    correct_or_not("R")
+    button_a = st.button("A")
+    if button_a:
+        chosen = "A"
 
-if st.session_state.count > 10:
-    retry_button = st.button("Retry")
+    button_j = st.button("J")
+    if button_j:
+        chosen = "J"
+
+    button_s = st.button("S")
+    if button_s:
+        chosen = "S"
+
+with kpi2:
+    button_b = st.button("B")
+    if button_b:
+        chosen = "B"
+
+    button_k = st.button("K")
+    if button_k:
+        chosen = "K"
+
+    button_t = st.button("T")
+    if button_t:
+        chosen = "T"
+
+with kpi3:
+    button_c = st.button("C")
+    if button_c:
+        chosen = "C"
+
+    button_l = st.button("L")
+    if button_l:
+        chosen = "L"
+    
+    button_u = st.button("U")
+    if button_u:
+        chosen = "U"
+
+with kpi4:
+    button_d = st.button("D")
+    if button_d:
+        chosen = "D"
+
+    button_m = st.button("M")
+    if button_m:
+        chosen = "M"
+    
+    button_v = st.button("V")
+    if button_v:
+        chosen = "V"
+
+with kpi5:
+    button_e = st.button("E")
+    if button_e:
+        chosen = "E"
+    button_n = st.button("N")
+    if button_n:
+        chosen = "N"
+    
+    button_w = st.button("W")
+    if button_w:
+        chosen = "W"
+
+with kpi6:
+    button_f = st.button("F")
+    if button_f:
+        chosen = "F"
+
+    button_o = st.button("O")
+    if button_o:
+        chosen = "O"
+    
+    button_x = st.button("X")
+    if button_x:
+        chosen = "X"
+
+with kpi7:
+    button_g = st.button("G")
+    if button_g:
+        chosen = "G"
+
+    button_p = st.button("P")
+    if button_p:
+        chosen = "P"
+
+    button_y = st.button("Y")
+    if button_y:
+        chosen = "Y"
+
+with kpi8:
+    button_h = st.button("H")
+    if button_h:
+        chosen = "H"
+
+    button_q = st.button("Q")
+    if button_q:
+        chosen = "Q"
+    
+    button_z = st.button("Z")
+    if button_z:
+        chosen = "Z"
+
+with kpi9:
+    button_i = st.button("I")
+    if button_i:
+        chosen = "I"
+    button_r = st.button("R")
+    if button_r:
+        chosen = "R"
+
+if chosen == '_' and st.session_state.count <= 10:
+    st.stop()
+elif chosen not in l_word and st.session_state.count <= 10:
+    st.session_state.count+=1
+elif chosen in l_word and st.session_state.count <= 10:
+    st.session_state.cletters.append(chosen)
+    for i in range(len(st.session_state.cletters)):
+        st.text(st.session_state.cletters)
+        break
+else:
+    retry_button = st.button("Retry?")
     if retry_button:
         st.session_state.count = 0
